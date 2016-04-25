@@ -12,13 +12,8 @@
 	<body>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Header.php'; ?>
 		<div class="center">
-			<?php
-				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Main.php';
-				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Side.php';
-			?>
+		<h3>CAMAGRU</h3>
 		</div>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
-
-		<script src="js/webcam.js"></script>
 	</body>
 </html>

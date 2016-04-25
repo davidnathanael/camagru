@@ -2,19 +2,19 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
 if(!isset( $_POST['username'], $_POST['password'], $_POST['confirm_password'], $_POST['mail'], $_POST['form_token']))
-    $message = 'All fields are required';
+    header("Location: ../auth.php?action=login&msg=" . urlencode('All fields are required'));
 elseif( $_POST['form_token'] != $_SESSION['form_token'])
-    $message = 'Invalid form submission';
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Invalid form submission'));
 elseif (strlen( $_POST['username']) > 20 || strlen($_POST['username']) < 4)
-    $message = 'Incorrect Length for Username';
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Incorrect Length for Username'));
 elseif (strlen( $_POST['password']) > 20 || strlen($_POST['password']) < 4)
-    $message = 'Incorrect Length for Password';
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Incorrect Length for Password'));
 elseif ($_POST['password'] != $_POST['confirm_password'])
-    $message = 'Passwords dont match';
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Passwords dont match'));
 elseif (ctype_alnum($_POST['username']) != true)
-    $message = "Username must be alpha numeric";
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Username must be alpha numeric'));
 elseif (ctype_alnum($_POST['password']) != true)
-    $message = "Password must be alpha numeric";
+    header("Location: ../auth.php?action=login&msg=" . urlencode('Password must be alpha numeric'));
 else
 {
     /*** if we are here the data is valid and we can insert it into database ***/
@@ -27,7 +27,7 @@ else
     /*** now we can encrypt the password ***/
     $password = hash('whirlpool', $password);
     
-    // /*** connect to database ***/
+    // /*** connect to database ***/ 
     // /*** mysql hostname ***/
     // $mysql_hostname = 'localhost';
 
@@ -61,26 +61,20 @@ else
 
         /*** unset the form token session variable ***/
         unset( $_SESSION['form_token'] );
+        $_SESSION['login'] = $username;
 
+        header("Location: ../index.php");
         /*** if all is done, say thanks ***/
-        $message = 'New user added';
+        // $message = 'New user added';
     }
     catch(Exception $e)
     {
         /*** check if the username already exists ***/
         if( $e->getCode() == 23000)
-        {
-            $message = 'Username already exists';
-        }
+            $message = 'Login or email already exists';
         else
-        {
-            echo '<pre>';
-            print_r($e);
-            echo '</pre>';
-            /*** if we are here, something has gone wrong with the database ***/
             $message = 'We are unable to process your request. Please try again later"';
-        }
+        header("Location: ../auth.php?action=signup&msg=" . urlencode($message));
     }
 }
 ?>
-<p><?php echo $message; ?>

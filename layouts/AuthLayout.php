@@ -13,12 +13,14 @@
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Header.php'; ?>
 		<div class="center">
 			<?php
-				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Main.php';
-				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Side.php';
+			if (isset($_GET['msg']))
+				echo htmlspecialchars($_GET['msg']);
+			if ($_GET['action'] == 'login')
+				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Login.php';
+			else if ($_GET['action'] == 'signup')
+				include $_SERVER['DOCUMENT_ROOT'] . '/partials/CreateAccount.php';
 			?>
 		</div>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
-
-		<script src="js/webcam.js"></script>
 	</body>
 </html>

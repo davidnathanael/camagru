@@ -1,6 +1,6 @@
 (function() {
 
-  var width = 320;
+  var width = 500;
   var height = 0;
   var streaming = false;
   var video = null;

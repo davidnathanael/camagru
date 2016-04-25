@@ -1,5 +1,5 @@
 <div class='main-content'>
-
+	<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/FiltersBar.php'; ?>
 	<div class="camera">
 		<video id="video">Video stream not available.</video>
 		<button id="startbutton">Take photo</button>
