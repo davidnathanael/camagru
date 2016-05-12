@@ -17,7 +17,7 @@ else
 
     /*** now we can encrypt the password ***/
     $password = hash('whirlpool', $password);
-    
+
     try
     {
         $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -52,16 +52,7 @@ else
     }
     catch(Exception $e)
     {
-        /*** check if the username already exists ***/
-        if( $e->getCode() == 23000)
-        {
-            $message = 'Username already exists';
-        }
-        else
-        {
-            /*** if we are here, something has gone wrong with the database ***/
-            $message = 'We are unable to process your request. Please try again later"';
-        }
+        $message = 'We are unable to process your request. Please try again later';
 		header("Location: ../auth.php?action=login&msg=" . urlencode($message));
     }
 }

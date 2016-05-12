@@ -1,6 +1,6 @@
 <header>
 	<ul>
-		<?php if (!isset($_SESSION['login'])) 
+		<?php if (!isset($_SESSION['login']))
 		{
 		?>
 			<li><a href="../auth.php?action=login">Log in</a></li>

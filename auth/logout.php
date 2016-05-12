@@ -1,8 +1,8 @@
 <?php
 
 session_start();
+unset($_SESSION['login']);
 
-unset( $_SESSION['login'] );
-header("Location: ../index.php" . urlencode($message));
+header("Location: ../index.php");
 
 ?>
