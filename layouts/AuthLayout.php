@@ -19,6 +19,10 @@
 				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Login.php';
 			else if ($_GET['action'] == 'signup')
 				include $_SERVER['DOCUMENT_ROOT'] . '/partials/CreateAccount.php';
+			else if ($_GET['action'] == 'forgot')
+				include $_SERVER['DOCUMENT_ROOT'] . '/partials/ForgotPassword.php';
+			else if ($_GET['action'] == 'reset_password')
+				include $_SERVER['DOCUMENT_ROOT'] . '/partials/ResetPassword.php';
 			?>
 		</div>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>

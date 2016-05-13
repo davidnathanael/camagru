@@ -8,7 +8,7 @@ $_SESSION['form_token'] = $form_token;
 <form action="../validations/Login.php" method="post">
 		<p>
 			<label for="username">Username</label>
-			<input type="text" id="username" name="username" maxlength="20" />
+			<input type="text" id="username" name="username" maxlength="20" value="<?php echo $_GET['login']; ?>"/>
 		</p>
 		<p>
 			<label for="password">Password</label>
@@ -19,3 +19,6 @@ $_SESSION['form_token'] = $form_token;
 			<input type="submit" value="&rarr; Log in" />
 		</p>
 </form>
+<p>
+	<a href="/auth.php?action=forgot">Forgot my password</a>
+</p>

@@ -20,5 +20,6 @@
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
 
 		<script src="js/webcam.js"></script>
+		<script src="js/filters.js"></script>
 	</body>
 </html>

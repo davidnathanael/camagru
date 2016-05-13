@@ -1,6 +1,6 @@
 (function() {
 
-  var width = 500;
+  var width = 350;
   var height = 0;
   var streaming = false;
   var video = null;
@@ -44,7 +44,7 @@
         if (isNaN(height)) {
         	height = width / (4/3);
         }
-        
+
         video.setAttribute('width', width);
         video.setAttribute('height', height);
         canvas.setAttribute('width', width);
@@ -57,7 +57,7 @@
   		takepicture();
   		ev.preventDefault();
   	}, false);
-  	
+
   	clearphoto();
   }
   function clearphoto() {
@@ -74,7 +74,7 @@
   		canvas.width = width;
   		canvas.height = height;
   		context.drawImage(video, 0, 0, width, height);
-  		
+
   		var data = canvas.toDataURL('image/png');
   		// photo.setAttribute('src', data);
   	}
