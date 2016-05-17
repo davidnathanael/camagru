@@ -6,6 +6,8 @@
     var video = null;
     var canvas = null;
     var photo = null;
+    var prev = null;
+    var next = null;
     var startbutton = null;
 
     function startup() {
@@ -13,6 +15,9 @@
         canvas = document.getElementById('canvas');
         photo = document.getElementById('photo');
         startbutton = document.getElementById('startbutton');
+        prev = document.getElementById('prev');
+        next = document.getElementById('next');
+        var page = 1;
 
         navigator.getMedia = ( navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -34,6 +39,8 @@
                 console.log("An error occured! " + err);
             });
 
+            load_pictures(1);
+
             video.addEventListener('canplay', function(ev){
                 if (!streaming) {
                     height = video.videoHeight / (video.videoWidth/width);
@@ -53,6 +60,17 @@
                 takepicture();
                 ev.preventDefault();
             }, false);
+
+            prev.addEventListener('click', function(e){
+                load_pictures((page > 1) ? page - 1 : 1);
+                if (page > 1)
+                    page = page - 1;
+            });
+
+            next.addEventListener('click', function(e){
+                load_pictures(page + 1);
+                page = page + 1;
+            });
 
             clearphoto();
         }
@@ -88,6 +106,7 @@
                     var ret = xmlhttp.responseText;
                     photo.setAttribute('src', ret);
                     photo.style.display = "block";
+                    load_pictures(1);
                 }
             };
             xmlhttp.send("filter="+ get_filter() +"&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
@@ -103,6 +122,52 @@
             else if (document.getElementById('rainbow-radio').checked)
                 return ('rainbow');
         }
+
+        function load_pictures(page) {
+            var node = document.getElementById("gallery");
+            while (node.firstChild) {
+                node.removeChild(node.firstChild);
+            }
+            var xmlhttp = new XMLHttpRequest();
+            if (page == 1)
+                prev.style.display = "none";
+            else
+                prev.style.display = "inline-block";
+
+            xmlhttp.open("GET", "../validations/GetPictures.php?page=" + page, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var pictures = JSON.parse(xmlhttp.response);
+                    if (pictures.constructor === Array)
+                    {
+                        if (pictures.length < 10)
+                            next.style.display = "none";
+                        else
+                            next.style.display = "inline-block";
+                        pictures.forEach( function (pic)
+                        {
+                            var elem = document.createElement("img");
+
+                            elem.src = '../img/photos/' + pic.img_path;
+                            elem.setAttribute("height", "80");
+                            elem.setAttribute("width", "130");
+
+                            var container = document.createElement('div');
+                            container.setAttribute("class", "picture");
+                            container.appendChild(elem);
+                            document.getElementById("gallery").appendChild(container);
+                        });
+                    }
+                    else {
+                        page = page - 1;
+                        load_pictures(page - 1);
+                    }
+                }
+            };
+            xmlhttp.send();
+        }
+
 
         window.addEventListener('load', startup, false);
     })();

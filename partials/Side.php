@@ -1,5 +1,9 @@
 <div class='side-content'>
+	<div class="pagination">
+		<button id="prev">Previous</button>
+		<button id="next">Next</button>
+	</div>
+	<div id="gallery">
 
-Side
-	
+	</div>
 </div>

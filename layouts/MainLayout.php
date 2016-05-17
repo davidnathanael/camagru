@@ -17,9 +17,10 @@
 				include $_SERVER['DOCUMENT_ROOT'] . '/partials/Side.php';
 			?>
 		</div>
-		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
+		<?php //include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
 
 		<script src="js/webcam.js"></script>
 		<script src="js/filters.js"></script>
+		<script src="js/gallery.js"></script>
 	</body>
 </html>

@@ -25,6 +25,7 @@ ob_end_clean();
 
 try {
     $count = $DB->exec("INSERT INTO photos (img_path, user_id) VALUES ('" . $name . "', " . $_SESSION['id'] . ")");
+    $DB = null;
 } catch (Exception $e)
 {
     print("Error QUERY ! ". $e->getMessage() ."<br />");
