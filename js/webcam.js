@@ -87,6 +87,7 @@
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     var ret = xmlhttp.responseText
                     photo.setAttribute('src', ret);
+                    photo.style.display = "block";
                 }
             };
             xmlhttp.send("filter="+ get_filter() +"&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
