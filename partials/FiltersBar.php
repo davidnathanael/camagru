@@ -1,18 +1,18 @@
 <div class="filters">
 	<div class="filter">
 		<img src="../img/filters/girls.png">
-		<input type="radio" name="filter" value="girls">
+		<input type="radio" id="girls-radio" name="filter" value="girls">
 	</div>
 	<div class="filter">
 		<img src="../img/filters/hair.png">
-		<input type="radio" name="filter" value="hair">
+		<input type="radio" id="hair-radio" name="filter" value="hair">
 	</div>
 	<div class="filter">
 		<img src="../img/filters/mustache.png">
-		<input type="radio" name="filter" value="mustache">
+		<input type="radio" id="mustache-radio" name="filter" value="mustache">
 	</div>
 	<div class="filter">
 		<img src="../img/filters/rainbow.png">
-		<input type="radio" name="filter" value="rainbow">
+		<input type="radio" id="rainbow-radio" name="filter" value="rainbow">
 	</div>
 </div>

@@ -35,6 +35,7 @@ else
 		if (!empty($data))
 		{
             $username = $data[0]['login'];
+            $id = $data[0]['login'];
 			if ($data[0]['confirmed'])
 			{
                 try {
@@ -46,6 +47,7 @@ else
                     ));
 
                     $_SESSION['login'] = $username;
+                    $_SESSION['id'] = $id;
                     header("Location: ../index.php");
             } catch(Exception $e) {
                     print("Error QUERY ! ". $e->getMessage() ."<br />");

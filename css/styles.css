@@ -60,9 +60,13 @@ footer{
 	height: 100%;
 }
 
-#video, #canvas{
+#video, #photo{
 	display: block;
 	margin: auto;
+}
+
+#canvas{
+	display: none;
 }
 
 .camera > button{

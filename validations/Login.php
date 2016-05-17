@@ -40,6 +40,7 @@ else
 			if ($data[0]['confirmed'])
 			{
 				$_SESSION['login'] = $data[0]['login'];
+				$_SESSION['id'] = $data[0]['id'];
 				header("Location: ../index.php" . urlencode($message));
 			}
 			else
