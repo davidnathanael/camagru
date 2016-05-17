@@ -107,6 +107,7 @@
                     photo.setAttribute('src', ret);
                     photo.style.display = "block";
                     load_pictures(1);
+                    page = 1;
                 }
             };
             xmlhttp.send("filter="+ get_filter() +"&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
