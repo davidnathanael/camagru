@@ -190,12 +190,13 @@
 
             var comment_btn = document.createElement("span");
             comment_btn.innerHTML = 'Comment : ' + pic.nb_comments;
-            comment_btn.setAttribute("class", "like-btn");
+            comment_btn.setAttribute("class", "comment-btn");
             comment_btn.setAttribute("id", pic.id);
             comment_btn.addEventListener('click', comment_picture);
 
+
             var comments_container = document.createElement("div");
-            comments_container.setAttribute("class", "like-btn");
+            comments_container.setAttribute("class", "comments-container");
 
             if (pic.comments.length) {
                 pic.comments.forEach(function (comment) {
@@ -205,6 +206,14 @@
                     comments_container.appendChild(comment_elem);
                 });
             }
+
+            container.addEventListener('mouseover', function(e) {
+                this.setAttribute("class", "picture show-comments");
+            });
+
+            container.addEventListener('mouseout', function(e) {
+                this.setAttribute("class", "picture");
+            });
 
             container.setAttribute("class", "picture");
             container.appendChild(elem);

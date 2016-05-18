@@ -13,7 +13,12 @@ $path = "../img/photos/" . $name ;
 imageAlphaBlending($filter, true);
 imageSaveAlpha($filter, true);
 
-imagecopy($image, $filter, 0, 0 , 0, 0, imagesx($filter), imagesy($filter));
+if ($_POST['filter'] == 'mustache')
+    imagecopy($image, $filter, 140, 140 , 0, 0, imagesx($filter), imagesy($filter));
+else if ($_POST['filter'] == 'hair')
+    imagecopy($image, $filter, 100, 0, 0, 0, imagesx($filter), imagesy($filter));
+else
+    imagecopy($image, $filter, 0, 0 , 0, 0, imagesx($filter), imagesy($filter));
 
 imagepng($image, $path);
 ob_start();

@@ -21,6 +21,7 @@ try {
                 if ($count)
                 {
                     $DB->query('DELETE FROM likes WHERE photo_id = ' . $pic['id']);
+                    $DB->query('DELETE FROM comments WHERE photo_id = ' . $pic['id']);
                     unlink("../img/photos/" . $pic['img_path']);
                     echo json_encode(array('msg' => 'success'));
                 }

@@ -14,7 +14,7 @@ header{
 }
 
 .main-content{
-	width:		1000px;
+	width:		700px;
 	height:		800px;
 	margin-right:	10px;
 	border:		black solid 1px;
@@ -23,7 +23,7 @@ header{
 }
 
 .side-content{
-	width:		200px;
+	width:		350px;
 	height:		800px;
 	margin-left:	10px;
 	border:		black solid 1px;
@@ -73,4 +73,35 @@ footer{
 .camera > button{
 	display: block;
 	margin: auto;
+}
+
+.del-btn{
+	position: absolute;
+	cursor: pointer;
+}
+
+.del-btn:hover {
+	color: red;
+}
+
+.like-btn {
+	display: block;
+	cursor: pointer;
+}
+
+.comment-btn {
+	display: block;
+	cursor: pointer;
+}
+
+.comment {
+	display: block;
+}
+
+.comments-container {
+	display: none;
+}
+
+.show-comments > .comments-container{
+	display: block;
 }
