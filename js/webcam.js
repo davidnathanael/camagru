@@ -171,6 +171,10 @@
             elem.src = '../img/photos/' + pic.img_path;
             elem.setAttribute("height", "100");
             elem.setAttribute("width", "130");
+            elem.addEventListener('click', function (e) {
+                photo.setAttribute('src', '../img/photos/' + pic.img_path);
+                photo.style.display = "block";
+            });
 
             if(user_id == pic.user_id)
             {
@@ -183,13 +187,17 @@
             }
 
             var like_btn = document.createElement("span");
-            like_btn.innerHTML = (pic.liked) ? 'Unlike : ' + pic.likes : 'Like : ' + pic.likes;
+            like_btn.innerHTML = (pic.liked) ? 'Unlike' : 'Like';
             like_btn.setAttribute("class", "like-btn");
             like_btn.setAttribute("id", pic.id);
             like_btn.addEventListener('click', like_picture);
 
+            var nb_likes = document.createElement("span");
+            nb_likes.innerHTML = (pic.likes) ? ((pic.likes == 1) ? "1 like" : pic.likes + "likes") : "No likes";
+            nb_likes.setAttribute("class", "likes");
+
             var comment_btn = document.createElement("span");
-            comment_btn.innerHTML = 'Comment : ' + pic.nb_comments;
+            comment_btn.innerHTML = 'Comment ' + ((pic.nb_comments) ? pic.nb_comments : "");
             comment_btn.setAttribute("class", "comment-btn");
             comment_btn.setAttribute("id", pic.id);
             comment_btn.addEventListener('click', comment_picture);
@@ -217,6 +225,7 @@
 
             container.setAttribute("class", "picture");
             container.appendChild(elem);
+            container.appendChild(nb_likes);
             container.appendChild(like_btn);
             container.appendChild(comment_btn);
             container.appendChild(comments_container);

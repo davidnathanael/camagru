@@ -1,7 +1,29 @@
-header{
-	width:		100%;
-	height:		150px;
-	background-color: black;
+header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+header li {
+    float: left;
+}
+
+header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+header li a:hover:not(.active) {
+    background-color: #111;
+}
+
+header .index {
+	background-color: #008080;
 }
 
 .center{
@@ -29,6 +51,7 @@ header{
 	border:		black solid 1px;
 	float:		left;
 	clear:		none;
+	overflow: scroll;
 }
 
 footer{
@@ -52,12 +75,28 @@ footer{
 	display: inline-block;
 	width: 100px;
 	height: 100px;
-	margin: 20px 20px;
+	margin: 10px 10px;
+	padding: 10px 10px;
+	border-radius: 5px;
+}
+
+.filter:hover {
+	transition: .3s;
+	background-color: #008080;
+	cursor: pointer;
 }
 
 .filter > img {
 	width: 100%;
 	height: 100%;
+}
+
+.selected-filter {
+	background-color: #008080;
+}
+
+input[type="radio"]{
+    visibility:hidden;
 }
 
 #video{
@@ -75,8 +114,47 @@ footer{
 	margin: auto;
 }
 
+#startbutton {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.picture {
+	display: inline-block;
+	padding: 10px;
+}
+
+.picture > img:hover {
+	-webkit-filter: opacity(30%); /* Chrome, Safari, Opera */
+    filter: opacity(30%);
+}
+
+button {
+	background-color: #008080; /* Green */
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button:hover {
+	transition: .3s;
+	background-color: #009090; /* Green */
+}
+
+button#next, button#prev {
+	margin: 10px;
+}
+
 .del-btn{
-	position: absolute;
+	position: relative;
+	bottom: 90px;
+	left: 10px;
+	z-index: 100;
 	cursor: pointer;
 }
 

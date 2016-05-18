@@ -12,7 +12,7 @@
 	<body>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Header.php'; ?>
 		<div class="center">
-		<h3>CAMAGRU</h3>
+			<h3>CAMAGRU</h3>
 		</div>
 		<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/Footer.php'; ?>
 	</body>

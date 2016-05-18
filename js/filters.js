@@ -4,22 +4,32 @@ var mustache = document.getElementById('mustache-radio');
 var rainbow = document.getElementById('rainbow-radio');
 var startbutton = document.getElementById('startbutton');
 
-girls.addEventListener('click', function(e){
-    startbutton.removeAttribute('disabled');
-    startbutton.textContent='Take Photo';
+document.getElementById('girls-filter').addEventListener('click', function (e) {
+    select_filter(this);
+    girls.checked = true;
 });
 
-hair.addEventListener('click', function(e){
-    startbutton.removeAttribute('disabled');
-    startbutton.textContent='Take Photo';
+document.getElementById('hair-filter').addEventListener('click', function (e) {
+    select_filter(this);
+    hair.checked = true;
 });
 
-mustache.addEventListener('click', function(e){
-    startbutton.removeAttribute('disabled');
-    startbutton.textContent='Take Photo';
+document.getElementById('mustache-filter').addEventListener('click', function (e) {
+    select_filter(this);
+    mustache.checked = true;
 });
 
-rainbow.addEventListener('click', function(e){
+document.getElementById('rainbow-filter').addEventListener('click', function (e) {
+    select_filter(this);
+    rainbow.checked = true;
+});
+
+function select_filter(filter){
+    document.getElementById('girls-filter').setAttribute('class', 'filter');
+    document.getElementById('hair-filter').setAttribute('class', 'filter');
+    document.getElementById('mustache-filter').setAttribute('class', 'filter');
+    document.getElementById('rainbow-filter').setAttribute('class', 'filter');
+    filter.setAttribute('class', 'filter selected-filter');
     startbutton.removeAttribute('disabled');
     startbutton.textContent='Take Photo';
-});
+}
