@@ -189,16 +189,28 @@
             like_btn.addEventListener('click', like_picture);
 
             var comment_btn = document.createElement("span");
-            comment_btn.innerHTML = 'Comment';
+            comment_btn.innerHTML = 'Comment : ' + pic.nb_comments;
             comment_btn.setAttribute("class", "like-btn");
             comment_btn.setAttribute("id", pic.id);
             comment_btn.addEventListener('click', comment_picture);
 
+            var comments_container = document.createElement("div");
+            comments_container.setAttribute("class", "like-btn");
+
+            if (pic.comments.length) {
+                pic.comments.forEach(function (comment) {
+                    var comment_elem = document.createElement("span");
+                    comment_elem.innerHTML = "<strong>" + comment.user + "</strong> : " +comment.comment;
+                    comment_elem.setAttribute("class", "comment");
+                    comments_container.appendChild(comment_elem);
+                });
+            }
 
             container.setAttribute("class", "picture");
             container.appendChild(elem);
             container.appendChild(like_btn);
             container.appendChild(comment_btn);
+            container.appendChild(comments_container);
 
             document.getElementById("gallery").appendChild(container);
         }
@@ -245,7 +257,23 @@
 
         function comment_picture()
         {
-            console.log(this);
+            var comment = prompt("Comment picture");
+            if (comment != null)
+            {
+                var xmlhttp = new XMLHttpRequest();
+                var elem = this;
+                xmlhttp.open("POST", "../validations/CommentPicture.php", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var response = JSON.parse(xmlhttp.response);
+                        if (response.msg == "success") {
+                            load_pictures(page);
+                        }
+                    }
+                };
+                xmlhttp.send("id="+ elem.id +"&comment=" + encodeURIComponent(comment));
+            }
         }
 
         window.addEventListener('load', startup, false);

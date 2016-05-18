@@ -35,7 +35,13 @@ try {
                     $pictures[$key]['liked'] = true;
             }
             $pictures[$key]['likes'] = count($likes);
-            // echo json_encode(array('likes' => count($likes)));
+
+            $comments = $DB->query('SELECT content, users.login as author FROM comments JOIN users ON comments.user_id=users.id WHERE photo_id = ' . $pic['id'])->fetchAll(PDO::FETCH_ASSOC);
+            $pictures[$key]['comments'] = array();
+            foreach ($comments as $comment) {
+                $pictures[$key]['comments'][] = array('comment' => $comment['content'], 'user' => $comment['author']);
+            }
+            $pictures[$key]['nb_comments'] = count($comments);
         }
         echo json_encode(array('msg' => 'success', 'last_page' => $pages, 'user_id' => $_SESSION['id'], 'pictures' => $pictures));
 
