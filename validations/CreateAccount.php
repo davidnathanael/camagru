@@ -27,21 +27,19 @@ else
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
     $mail = filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL);
     date_default_timezone_set('Europe/Paris');
-    $date = date("Y-m-d H:i:s");
 
     $password = hash('whirlpool', $password);
     $confirmation_hash = generateRandomString(50);
 
     try
     {
-        $stmt = $DB->prepare('INSERT INTO users (login, password, mail, confirmation_hash, createdAt) VALUES (:username, :password, :mail, :confirmation_hash, :createdAt)');
+        $stmt = $DB->prepare('INSERT INTO users (login, password, mail, confirmation_hash) VALUES (:username, :password, :mail, :confirmation_hash)');
 
         $stmt->execute(array(
                 ':username' => $username,
                 ':password' => $password,
                 ':mail' => $mail,
                 ':confirmation_hash' => $confirmation_hash,
-                ':createdAt' => $date
         ));
 
         $DB = null;
@@ -61,7 +59,7 @@ else
             $message = 'Login or email already exists';
         else
             $message = 'We are unable to process your request. Please try again later';
-        header("Location: ../auth.php?action=signup&msg=" . urlencode($message));
+        header("Location: ../auth.php?action=signup&msg=" . urlencode($message . $e->getMessage()));
     }
 }
 ?>

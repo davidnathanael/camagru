@@ -9,6 +9,7 @@
     var prev = null;
     var next = null;
     var startbutton = null;
+    var del_btn = null;
 
     function startup() {
         video = document.getElementById('video');
@@ -17,7 +18,7 @@
         startbutton = document.getElementById('startbutton');
         prev = document.getElementById('prev');
         next = document.getElementById('next');
-        var page = 1;
+        page = 1;
 
         navigator.getMedia = ( navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -64,7 +65,7 @@
             prev.addEventListener('click', function(e){
                 load_pictures((page > 1) ? page - 1 : 1);
                 if (page > 1)
-                    page = page - 1;
+                page = page - 1;
             });
 
             next.addEventListener('click', function(e){
@@ -106,8 +107,8 @@
                     var ret = xmlhttp.responseText;
                     photo.setAttribute('src', ret);
                     photo.style.display = "block";
-                    load_pictures(1);
                     page = 1;
+                    load_pictures(page);
                 }
             };
             xmlhttp.send("filter="+ get_filter() +"&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
@@ -125,6 +126,7 @@
         }
 
         function load_pictures(page) {
+            console.log(page);
             var node = document.getElementById("gallery");
             while (node.firstChild) {
                 node.removeChild(node.firstChild);
@@ -139,29 +141,22 @@
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    var pictures = JSON.parse(xmlhttp.response);
-                    if (pictures.constructor === Array)
+                    var response = JSON.parse(xmlhttp.response);
+                    console.log(response);
+                    if (response.msg == 'success')
                     {
-                        if (pictures.length < 10)
+                        var pictures = response.pictures;
+
+                        if (pictures.length < 10 || page == response.last_page)
                             next.style.display = "none";
                         else
                             next.style.display = "inline-block";
-                        pictures.forEach( function (pic)
-                        {
-                            var elem = document.createElement("img");
-
-                            elem.src = '../img/photos/' + pic.img_path;
-                            elem.setAttribute("height", "80");
-                            elem.setAttribute("width", "130");
-
-                            var container = document.createElement('div');
-                            container.setAttribute("class", "picture");
-                            container.appendChild(elem);
-                            document.getElementById("gallery").appendChild(container);
+                        pictures.forEach(function (pic) {
+                            create_element(pic, response.user_id);
                         });
                     }
-                    else {
-                        page = page - 1;
+                    else if (response.error == "No records" && page > 1)
+                    {
                         load_pictures(page - 1);
                     }
                 }
@@ -169,6 +164,89 @@
             xmlhttp.send();
         }
 
+        function create_element(pic, user_id) {
+            var elem = document.createElement("img");
+            var container = document.createElement('div');
+
+            elem.src = '../img/photos/' + pic.img_path;
+            elem.setAttribute("height", "100");
+            elem.setAttribute("width", "130");
+
+            if(user_id == pic.user_id)
+            {
+                var del_btn = document.createElement("span");
+                del_btn.innerHTML = 'x';
+                del_btn.setAttribute("class", "del-btn");
+                del_btn.setAttribute("id", pic.id);
+                del_btn.addEventListener('click', del_picture);
+                container.appendChild(del_btn);
+            }
+
+            var like_btn = document.createElement("span");
+            like_btn.innerHTML = (pic.liked) ? 'Unlike : ' + pic.likes : 'Like : ' + pic.likes;
+            like_btn.setAttribute("class", "like-btn");
+            like_btn.setAttribute("id", pic.id);
+            like_btn.addEventListener('click', like_picture);
+
+            var comment_btn = document.createElement("span");
+            comment_btn.innerHTML = 'Comment';
+            comment_btn.setAttribute("class", "like-btn");
+            comment_btn.setAttribute("id", pic.id);
+            comment_btn.addEventListener('click', comment_picture);
+
+
+            container.setAttribute("class", "picture");
+            container.appendChild(elem);
+            container.appendChild(like_btn);
+            container.appendChild(comment_btn);
+
+            document.getElementById("gallery").appendChild(container);
+        }
+
+        function del_picture() {
+            if (confirm("Do you want to delete this picture?"))
+            {
+                var xmlhttp = new XMLHttpRequest();
+                var elem = this;
+                xmlhttp.open("GET", "../validations/DeletePicture.php?id=" + this.id, true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var response = JSON.parse(xmlhttp.response);
+                        if (response.msg === "success")
+                        {
+                            elem.parentNode.remove();
+                            load_pictures(page);
+                        }
+                        else
+                            console.log(response.error);
+                    }
+                };
+                xmlhttp.send();
+            }
+        }
+
+        function like_picture()
+        {
+            var xmlhttp = new XMLHttpRequest();
+            var elem = this;
+            xmlhttp.open("GET", "../validations/LikePicture.php?id=" + this.id, true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var response = JSON.parse(xmlhttp.response);
+                    if (response.msg == "success") {
+                        load_pictures(page);
+                    }
+                }
+            };
+            xmlhttp.send();
+        }
+
+        function comment_picture()
+        {
+            console.log(this);
+        }
 
         window.addEventListener('load', startup, false);
     })();
