@@ -12,6 +12,7 @@
 		{
 		?>
 			<li><a class="index" href="../index.php">Camagru</a></li>
+			<li><a href="../index.php?page=gallery">Gallery</a></li>
 			<li style="float:right"><a href="../auth/logout.php">Log out</a></li>
 		<?php
 		}

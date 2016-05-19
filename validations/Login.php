@@ -41,6 +41,7 @@ else
 			{
 				$_SESSION['login'] = $data[0]['login'];
 				$_SESSION['id'] = $data[0]['id'];
+				$_SESSION['email'] = $data[0]['mail'];
 				header("Location: ../index.php" . urlencode($message));
 			}
 			else

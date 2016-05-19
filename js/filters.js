@@ -3,6 +3,7 @@ var hair = document.getElementById('hair-radio');
 var mustache = document.getElementById('mustache-radio');
 var rainbow = document.getElementById('rainbow-radio');
 var startbutton = document.getElementById('startbutton');
+var uploadbutton = document.getElementById('fileToUpload');
 
 document.getElementById('girls-filter').addEventListener('click', function (e) {
     select_filter(this);
@@ -32,4 +33,6 @@ function select_filter(filter){
     filter.setAttribute('class', 'filter selected-filter');
     startbutton.removeAttribute('disabled');
     startbutton.textContent='Take Photo';
+    uploadbutton.removeAttribute('disabled');
+    uploadbutton.style.display = 'block';
 }

@@ -6,7 +6,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
 try {
     $total = $DB->query('SELECT COUNT(*) FROM photos')->fetchColumn();
-    $limit = 10;
+    $limit = 12;
     $pages = ceil($total / $limit);
     $page = $_GET['page'];
     // $page = min($pages, filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT, array(
@@ -37,6 +37,7 @@ try {
             $pictures[$key]['likes'] = count($likes);
 
             $comments = $DB->query('SELECT content, users.login as author FROM comments JOIN users ON comments.user_id=users.id WHERE photo_id = ' . $pic['id'])->fetchAll(PDO::FETCH_ASSOC);
+            // print_r($comments);
             $pictures[$key]['comments'] = array();
             foreach ($comments as $comment) {
                 $pictures[$key]['comments'][] = array('comment' => $comment['content'], 'user' => $comment['author']);
