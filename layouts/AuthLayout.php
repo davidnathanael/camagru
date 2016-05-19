@@ -23,6 +23,8 @@
 				include $_SERVER['DOCUMENT_ROOT'] . '/partials/ForgotPassword.php';
 			else if ($_GET['action'] == 'reset_password')
 				include $_SERVER['DOCUMENT_ROOT'] . '/partials/ResetPassword.php';
+			else if ($_GET['action'] == 'confirm')
+				include $_SERVER['DOCUMENT_ROOT'] . '/partials/ConfirmAccount.php';
 			?>
 		</div>
 	</body>

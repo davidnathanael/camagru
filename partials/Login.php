@@ -15,4 +15,5 @@ $_SESSION['form_token'] = $form_token;
 </form>
 <p>
 	<a href="/auth.php?action=forgot">Forgot my password</a>
+	<a href="/auth.php?action=confirm">Confirm my account</a>
 </p>
