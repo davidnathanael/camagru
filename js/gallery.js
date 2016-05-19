@@ -26,6 +26,7 @@
 
         function load_pictures(page) {
             console.log(page);
+
             var node = document.getElementById("gallery");
             while (node.firstChild) {
                 node.removeChild(node.firstChild);
@@ -76,14 +77,13 @@
 
             if(user_id == pic.user_id)
             {
-                var del_btn = document.createElement("span");
-                del_btn.innerHTML = 'x';
+                var del_btn = document.createElement("button");
+                del_btn.innerHTML = 'Delete';
                 del_btn.setAttribute("class", "del-btn");
                 del_btn.setAttribute("id", pic.id);
                 del_btn.addEventListener('click', del_picture);
                 container.appendChild(del_btn);
             }
-
 
             var like_btn = document.createElement("button");
             like_btn.innerHTML = (pic.liked) ? 'Unlike' : 'Like';
@@ -103,7 +103,8 @@
             btn_container.appendChild(comment_btn);
 
             var nb_likes = document.createElement("span");
-            nb_likes.innerHTML = (pic.likes) ? ((pic.likes == 1) ? "1 like" : pic.likes + " likes") : "No likes";
+            // nb_likes.innerHTML = (pic.likes) ? ((pic.likes == 1) ? "1 like" : pic.likes + " likes") : "No likes";
+            nb_likes.innerHTML = (pic.likes);
             nb_likes.setAttribute("class", "likes");
 
             var nb_comments = document.createElement("span");

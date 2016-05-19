@@ -172,7 +172,7 @@
             else
             prev.style.display = "inline-block";
 
-            xhr.open("GET", "../validations/GetPictures.php?page=" + page, true);
+            xhr.open("GET", "../validations/GetUserPictures.php?page=" + page, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
@@ -208,8 +208,8 @@
             var container = document.createElement('div');
 
             elem.src = '../img/photos/' + pic.img_path;
-            elem.setAttribute("height", "100");
-            elem.setAttribute("width", "130");
+            elem.setAttribute("width", "160");
+            elem.setAttribute("height", "120");
             elem.addEventListener('click', function (e) {
                 photo.setAttribute('src', '../img/photos/' + pic.img_path);
                 photo.style.display = "block";
@@ -217,8 +217,8 @@
 
             if(user_id == pic.user_id)
             {
-                var del_btn = document.createElement("span");
-                del_btn.innerHTML = 'x';
+                var del_btn = document.createElement("button");
+                del_btn.innerHTML = 'Delete';
                 del_btn.setAttribute("class", "del-btn");
                 del_btn.setAttribute("id", pic.id);
                 del_btn.addEventListener('click', del_picture);
@@ -243,25 +243,27 @@
             btn_container.appendChild(comment_btn);
 
             var nb_likes = document.createElement("span");
-            nb_likes.innerHTML = (pic.likes) ? ((pic.likes == 1) ? "1 like" : pic.likes + " likes") : "No likes";
+            // nb_likes.innerHTML = (pic.likes) ? ((pic.likes == 1) ? "1 like" : pic.likes + " likes") : "No likes";
+            nb_likes.innerHTML = (pic.likes);
             nb_likes.setAttribute("class", "likes");
 
             var nb_comments = document.createElement("span");
-            nb_comments.innerHTML = (pic.nb_comments) ? ((pic.nb_comments == 1) ? "1 comment" : pic.nb_comments + " comments") : "No comments";
+            // nb_comments.innerHTML = (pic.nb_comments) ? ((pic.nb_comments == 1) ? "1 comment" : pic.nb_comments + " comments") : "No comments";
+            nb_comments.innerHTML = (pic.nb_comments);
             nb_comments.setAttribute("class", "nb-comments");
 
 
-            if (pic.nb_comments) {
-                var comments_container = document.createElement("div");
-                comments_container.setAttribute("class", "comments-container");
-
-                pic.comments.forEach(function (comment) {
-                    var comment_elem = document.createElement("span");
-                    comment_elem.innerHTML = "<strong>" + comment.user + "</strong> : " +comment.comment;
-                    comment_elem.setAttribute("class", "comment");
-                    comments_container.appendChild(comment_elem);
-                });
-            }
+            // if (pic.nb_comments) {
+            //     var comments_container = document.createElement("div");
+            //     comments_container.setAttribute("class", "comments-container");
+            //
+            //     pic.comments.forEach(function (comment) {
+            //         var comment_elem = document.createElement("span");
+            //         comment_elem.innerHTML = "<strong>" + comment.user + "</strong> : " +comment.comment;
+            //         comment_elem.setAttribute("class", "comment");
+            //         comments_container.appendChild(comment_elem);
+            //     });
+            // }
 
             container.addEventListener('mouseover', function(e) {
                 this.setAttribute("class", "picture hovered-picture");
@@ -276,8 +278,8 @@
             container.appendChild(nb_comments);
             container.appendChild(elem);
             container.appendChild(btn_container);
-            if (pic.nb_comments)
-            container.appendChild(comments_container);
+            // if (pic.nb_comments)
+            // container.appendChild(comments_container);
 
             document.getElementById("gallery").appendChild(container);
         }

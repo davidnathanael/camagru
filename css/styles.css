@@ -48,7 +48,6 @@ header .index {
 
 .center{
 	width:		100%;
-    margin-top: 20px;
 }
 
 .main-content{
@@ -62,7 +61,7 @@ header .index {
 
 .side-content{
 	width:		38%;
-    padding: 1% 0;
+    padding:    0 0;
     min-height:		1000px;
 	float:		left;
 	clear:		none;
@@ -84,10 +83,17 @@ footer{
     width: 		100%;
 	height:		150px;
     margin-top: 20px;
+    text-align: center;
+    color: #FFF;
+    line-height: 150px;
+}
+footer h1 {
+    margin: 0;
 }
 
 .filters{
 	width: 100%;
+	padding: 5px;
     margin-bottom: 10px;
     background-color: #333;
 }
@@ -95,9 +101,10 @@ footer{
 .filter{
 	display: inline-block;
 	width: 20%;
-	height: 100px;
-	margin: 10px 2%;
-	/*padding: 10px 10px;*/
+	height: 120px;
+    vertical-align: middle;
+	margin: 0;
+	padding: 10px 2%;
 	border-radius: 5px;
 }
 
@@ -150,13 +157,38 @@ input[type=submit]:hover {
 }
 
 #video{
+    position: relative;
 	display: block;
 	margin: auto;
+}
+
+#live-filters {
+    position: relative;
+    width: 350px;
+    margin: auto;
+}
+
+#live-filters img {
+    position: absolute;
+    display: none;
+    z-index: 100;
+}
+
+#live-filter-mustache {
+    left: 140px;
+    top: 140px;
+}
+
+#live-filter-hair{
+    left: 100px;
 }
 
 #canvas, #photo{
 	display: none;
 	margin: auto;
+}
+
+.camera {
 }
 
 .camera > button{
@@ -172,6 +204,9 @@ input[type=submit]:hover {
 #startbutton {
 	margin-top: 10px;
 	margin-bottom: 10px;
+    cursor: not-allowed;
+    transition: .3s;
+    background-color: #333;
 }
 
 .picture {
@@ -197,6 +232,53 @@ input[type=submit]:hover {
     margin: auto;
 }
 
+.gallery-container .btn-container {
+    position: absolute;
+    top: 10px;
+}
+
+.gallery-container .like-btn, .gallery-container .comment-btn{
+    display: none;
+    width: 175px;
+	font-size: 2em;
+    padding: 0;
+    margin: 0;
+}
+
+.hovered-picture .like-btn, .hovered-picture .comment-btn{
+    display: inline-block;
+}
+
+.gallery-container .del-btn{
+	position: absolute;
+    top: 235px;
+    width: 350px;
+	z-index: 100;
+	cursor: pointer;
+	font-size: 2em;
+    padding: 0;
+    margin: 0;
+}
+
+.gallery-container .likes {
+    left: 60px;
+    top: 70px;
+    font-size: 7em;
+}
+
+.gallery-container .nb-comments {
+    left: 220px;
+    font-size: 16px;
+}
+
+.gallery-container .comments-container {
+    left: 200px;
+    width: 150px;
+    height: 160px;
+    overflow: scroll;
+    word-wrap: break-word;
+}
+
 .pagination {
     height: 90px;
 }
@@ -213,9 +295,14 @@ button, #fileToUpload {
 	cursor: pointer;
 }
 
+#fileToUpload:hover, button:hover {
+    transition: .3s;
+    background-color: #00A0A0;
+}
+
 #fileToUpload {
     display: none;
-    width: 350px;
+    width: 290px;
     margin: 10px auto;
     color: transparent;
 }
@@ -247,42 +334,51 @@ button#next {
 
 .del-btn{
     display: none;
-	position: absolute;;
-	top: 10px;
-	left: 15px;
-	z-index: 100;
+	position: absolute;
+    top: 102px;
+	padding: 5px 0;
+    width: 160px;
+    z-index: 100;
 	cursor: pointer;
 }
 
 .del-btn:hover {
-	color: red;
+	background-color: red;
 }
 
 .likes {
     display: none;
     float: left;
-    position: absolute;;
-    left: 20px;
-    top: 30px;
+    position: absolute;
+    left: 45px;
+    top: 50px;
+    font-size: 2em;
 }
 
 .nb-comments{
     display: none;
     position: absolute;
-    left: 20px;
+    left: 120px;
     top: 50px;
+    font-size: 2em;
+}
+
+.btn-container {
+    position: absolute;
+    top: 10px;
 }
 
 .like-btn {
-	display: inline-block;
-	padding: 5px 5px;
-    margin-right: 5px;
+	display: none;
+    width: 80px;
+	padding: 5px 0;
 	cursor: pointer;
 }
 
 .comment-btn {
-	display: inline-block;
-	padding: 5px 5px;
+	display: none;
+    width: 80px;
+	padding: 5px 0;
 	cursor: pointer;
 }
 
@@ -312,6 +408,10 @@ button#next {
     display: initial;
 }
 
+.hovered-picture .like-btn, .hovered-picture .comment-btn {
+	display: inline-block;
+}
+
 @media only screen and (max-width: 1000px) {
     .main-content {
         width: 100%;
@@ -320,7 +420,6 @@ button#next {
     .side-content {
         width: 100%;
         margin: 0;
-        /*height: auto;*/
     }
 }
 
@@ -338,7 +437,7 @@ button#next {
     }
 }
 
-@media only screen and (max-width: 370px) {
+/*@media only screen and (max-width: 370px) {
     .gallery-container #gallery {
         width: 100%;
         margin: auto;
@@ -348,4 +447,4 @@ button#next {
         height: 100%;
         margin: auto;
     }
-}
+}*/
