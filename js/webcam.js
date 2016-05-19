@@ -146,7 +146,13 @@
                     }
                 }
             };
-            xhr.send("filter="+ get_filter() +"&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
+
+            var top_value = document.getElementById("top-move").value;
+            var left_value = document.getElementById("left-move").value;
+            console.log(top_value);
+            console.log(left_value);
+
+            xhr.send("filter="+ get_filter() + "&top=" + top_value + "&left=" + left_value + "&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
         }
 
         function    get_filter() {

@@ -14,11 +14,11 @@ imageAlphaBlending($filter, true);
 imageSaveAlpha($filter, true);
 
 if ($_POST['filter'] == 'mustache')
-    imagecopy($image, $filter, 140, 140 , 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 140 + $_POST["left"], 140 + $_POST["top"], 0, 0, imagesx($filter), imagesy($filter));
 else if ($_POST['filter'] == 'hair')
-    imagecopy($image, $filter, 100, 0, 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 100 + $_POST["left"], 0 + $_POST["top"], 0, 0, imagesx($filter), imagesy($filter));
 else
-    imagecopy($image, $filter, 0, 0 , 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 0 + $_POST["left"], 0 + $_POST["top"], 0, 0, imagesx($filter), imagesy($filter));
 
 imagepng($image, $path);
 ob_start();
@@ -37,6 +37,6 @@ try {
     die();
 }
 
-echo json_encode(array('msg' => 'success', 'data' => "data:image/png;base64," . base64_encode($ret))) ;
+echo json_encode(array('msg' => 'success', 'top' => $_POST['top'], 'data' => "data:image/png;base64," . base64_encode($ret))) ;
 
 ?>

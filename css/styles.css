@@ -175,12 +175,23 @@ input[type=submit]:hover {
 }
 
 #live-filter-mustache {
-    left: 140px;
     top: 140px;
+    left: 140px;
 }
 
 #live-filter-hair{
+    top: 0px;
     left: 100px;
+}
+
+#live-filter-girls {
+    top: 0px;
+    left: 0px;
+}
+
+#live-filter-rainbow {
+    top: 0px;
+    left: 0px;
 }
 
 #canvas, #photo{
