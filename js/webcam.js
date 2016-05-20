@@ -71,6 +71,8 @@
 
                 fd.append("file", file);
                 fd.append("filter", get_filter());
+                fd.append("top", document.getElementById("top-move").value);
+                fd.append("left", document.getElementById("left-move").value);
 
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../validations/UploadPicture.php', true);
@@ -137,7 +139,6 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.response);
-                    console.log(response);
                     if (response.msg == "success") {
                         photo.setAttribute('src', response.data);
                         photo.style.display = "block";
@@ -149,10 +150,9 @@
 
             var top_value = document.getElementById("top-move").value;
             var left_value = document.getElementById("left-move").value;
-            console.log(top_value);
-            console.log(left_value);
+            var added_width = document.getElementById("added-width").value;
 
-            xhr.send("filter="+ get_filter() + "&top=" + top_value + "&left=" + left_value + "&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
+            xhr.send("filter="+ get_filter() + "&top=" + top_value + "&left=" + left_value + "&width=" + added_width + "&data=" + encodeURIComponent(data.replace("data:image/png;base64,", "")));
         }
 
         function    get_filter() {

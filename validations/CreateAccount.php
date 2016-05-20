@@ -46,7 +46,7 @@ else
         unset( $_SESSION['form_token'] );
         $confirmation_link = "http://" . $_SERVER[HTTP_HOST] . "/validations/ConfirmAccount.php?hash=" . $confirmation_hash;
 
-        $mail_message = "Thank you for signing up. To verify your account please click this link : " . $confirmation_link;
+        $mail_message = "Thank you for signing up. To verify your account please click this link : " . $confirmation_link . " or enter the following code : " . $confirmation_hash;
 
         sendMail($mail, "Confirm your account", $mail_message);
 

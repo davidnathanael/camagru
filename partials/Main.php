@@ -1,9 +1,13 @@
 <div class='main-content'>
+	<div class="section-title">
+		<h1>Photobooth</h1>
+	</div>
 	<?php include $_SERVER['DOCUMENT_ROOT'] . '/partials/FiltersBar.php'; ?>
 	<div class="camera">
 			<input disabled type="file" name="fileToUpload" id="fileToUpload">
 			<input disabled type="hidden" id="top-move" value="0">
 			<input disabled type="hidden" id="left-move" value="0">
+			<input disabled type="hidden" id="added-width" value="0">
 			<div id="live-filters">
 				<img src="../img/filters/girls.png" alt="" id="live-filter-girls">
 				<img src="../img/filters/hair.png" alt="" id="live-filter-hair">

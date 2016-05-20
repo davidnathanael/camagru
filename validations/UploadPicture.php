@@ -3,7 +3,6 @@ session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . '/validations/Utils.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
-// print(json_encode(array('res' => $_REQUEST['filter'])));
 $data = base64_encode(file_get_contents($_FILES["file"]["tmp_name"]));
 
 $image = imagecreatefromstring(base64_decode($data));
@@ -15,11 +14,11 @@ imageAlphaBlending($filter, true);
 imageSaveAlpha($filter, true);
 
 if ($_REQUEST['filter'] == 'mustache')
-    imagecopy($image, $filter, 140, 140 , 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 140 + $_REQUEST['left'], 140 + $_REQUEST['top'], 0, 0, imagesx($filter), imagesy($filter));
 else if ($_REQUEST['filter'] == 'hair')
-    imagecopy($image, $filter, 100, 0, 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 100 + $_REQUEST['left'], 0 + $_REQUEST['top'], 0, 0, imagesx($filter), imagesy($filter));
 else
-    imagecopy($image, $filter, 0, 0 , 0, 0, imagesx($filter), imagesy($filter));
+    imagecopy($image, $filter, 0 + $_REQUEST['left'], 0 + $_REQUEST['top'], 0, 0, imagesx($filter), imagesy($filter));
 
 imagepng($image, $path);
 
@@ -35,7 +34,7 @@ try {
     $DB = null;
 } catch (Exception $e)
 {
-    print("Error QUERY ! ". $e->getMessage() ."<br />");
+    echo json_encode(array('msg' => 'failure', 'error' => $e->getMessage())) ;
     die();
 }
 

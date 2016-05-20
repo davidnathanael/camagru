@@ -1,5 +1,5 @@
 body {
-    background-color: grey;
+    background-color: #FFF;
 }
 
 header {
@@ -48,11 +48,13 @@ header .index {
 
 .center{
 	width:		100%;
+    height:     100%;
+    margin-bottom: 150px;
 }
 
 .main-content{
 	width:		60%;
-    min-height:		1000px;
+    min-height:		100%;
     padding: 1%;
 	float:		left;
 	clear:		none;
@@ -60,9 +62,9 @@ header .index {
 }
 
 .side-content{
-	width:		38%;
-    padding:    0 0;
-    min-height:		1000px;
+	width:		36%;
+    padding: 1%;
+    min-height:		100%;
 	float:		left;
 	clear:		none;
 	overflow: scroll;
@@ -77,7 +79,7 @@ header .index {
 footer{
     background-color: #333;
     clear:		both;
-    position:	relative;
+    position:	absolute;
     z-index:	10;
     bottom: 	0;
     width: 		100%;
@@ -91,30 +93,43 @@ footer h1 {
     margin: 0;
 }
 
-.filters{
+.section-title {
+    width: 100%;
+    text-align: center;
+}
+
+.filters {
+    padding: 10px;
+}
+
+#filters-table{
 	width: 100%;
-	padding: 5px;
-    margin-bottom: 10px;
+    max-width: 1000px;
+    margin: auto;
     background-color: #333;
+}
+
+#filters-table td{
+    width: 150px;
+    text-align: center;
+}
+
+#filters-table td:hover {
+    transition: .3s;
+    background-color: #008080;
+    cursor: pointer;
 }
 
 .filter{
 	display: inline-block;
-	width: 20%;
 	height: 120px;
-    vertical-align: middle;
 	margin: 0;
 	padding: 10px 2%;
 	border-radius: 5px;
 }
 
-.filter:hover {
-	transition: .3s;
-	background-color: #008080;
-	cursor: pointer;
-}
 
-.filter > img {
+.filter img {
 	width: 100%;
 	height: 100%;
 }
@@ -163,9 +178,14 @@ input[type=submit]:hover {
 }
 
 #live-filters {
-    position: relative;
+    position: absolute;
     width: 350px;
-    margin: auto;
+    height: 262px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
 }
 
 #live-filters img {
@@ -200,6 +220,7 @@ input[type=submit]:hover {
 }
 
 .camera {
+    position: relative;
 }
 
 .camera > button{
