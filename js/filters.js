@@ -16,108 +16,8 @@ top_move = 0;
 left_move = 0;
 added_width = 0;
 
-document.onkeydown = function(e) {
-    if (e.keyCode == 82)
-        reset_moving();
-    if (e.keyCode == 37) {
-
-        e.preventDefault();
-
-        left_move--;
-        left_input.value = left_move;
-
-        live_girls.style.left = (parseInt(window.getComputedStyle(live_girls).left) - 1 + "px");
-        live_hair.style.left = (parseInt(window.getComputedStyle(live_hair).left) - 1 + "px");
-        live_mustache.style.left = (parseInt(window.getComputedStyle(live_mustache).left) - 1 + "px");
-        live_rainbow.style.left = (parseInt(window.getComputedStyle(live_rainbow).left) - 1 + "px");
-    }
-    if (e.keyCode == 38) {
-        e.preventDefault();
-
-        top_move--;
-        top_input.value = top_move;
-
-        live_girls.style.top= (parseInt(window.getComputedStyle(live_girls).top) - 1 + "px");
-        live_hair.style.top= (parseInt(window.getComputedStyle(live_hair).top) - 1 + "px");
-        live_mustache.style.top = (parseInt(window.getComputedStyle(live_mustache).top) - 1 + "px");
-        live_rainbow.style.top = (parseInt(window.getComputedStyle(live_rainbow).top) - 1 + "px");
-    }
-    if (e.keyCode == 39) {
-        e.preventDefault();
-
-        left_move++;
-        left_input.value = left_move;
-
-        live_girls.style.left = (parseInt(window.getComputedStyle(live_girls).left) + 1 + "px");
-        live_hair.style.left = (parseInt(window.getComputedStyle(live_hair).left) + 1 + "px");
-        live_mustache.style.left = (parseInt(window.getComputedStyle(live_mustache).left) + 1 + "px");
-        live_rainbow.style.left = (parseInt(window.getComputedStyle(live_rainbow).left) + 1 + "px");
-    }
-    if (e.keyCode == 40) {
-        e.preventDefault();
-
-        top_move++;
-        top_input.value = top_move;
-        live_girls.style.top= (parseInt(window.getComputedStyle(live_girls).top) + 1 + "px");
-        live_hair.style.top = (parseInt(window.getComputedStyle(live_hair).top) + 1 + "px");
-        live_mustache.style.top = (parseInt(window.getComputedStyle(live_mustache).top) + 1 + "px");
-        live_rainbow.style.top= (parseInt(window.getComputedStyle(live_rainbow).top) + 1 + "px");
-    }
-    if (e.keyCode == 107) {
-        added_width++;
-
-        width_input.value  = added_width;
-        live_girls.style.width = (parseInt(window.getComputedStyle(live_girls).width) + 1 + "px");
-        live_hair.style.width = (parseInt(window.getComputedStyle(live_hair).width) + 1 + "px");
-        live_mustache.style.width = (parseInt(window.getComputedStyle(live_mustache).width) + 1 + "px");
-        live_rainbow.style.width = (parseInt(window.getComputedStyle(live_rainbow).width) + 1 + "px");
-    }
-    if (e.keyCode == 109) {
-        added_width--;
-
-        width_input.value  = added_width;
-        live_girls.style.width = (parseInt(window.getComputedStyle(live_girls).width) - 1 + "px");
-        live_hair.style.width = (parseInt(window.getComputedStyle(live_hair).width) - 1 + "px");
-        live_mustache.style.width = (parseInt(window.getComputedStyle(live_mustache).width) - 1 + "px");
-        live_rainbow.style.width = (parseInt(window.getComputedStyle(live_rainbow).width) - 1 + "px");
-    }
-};
-
-document.getElementById('girls-filter').addEventListener('click', function (e) {
-    reset_girls();
-    select_filter(this);
-    live_girls.style.display = "initial";
-    live_girls.style.width = "initial";
-    girls.checked = true;
-});
-
-document.getElementById('hair-filter').addEventListener('click', function (e) {
-    reset_hair();
-    select_filter(this);
-    live_hair.style.display = "initial";
-    live_hair.style.width = "initial";
-    hair.checked = true;
-});
-
-document.getElementById('mustache-filter').addEventListener('click', function (e) {
-    reset_mustache();
-    select_filter(this);
-    live_mustache.style.display = "initial";
-    live_mustache.style.width = "initial";
-    mustache.checked = true;
-});
-
-document.getElementById('rainbow-filter').addEventListener('click', function (e) {
-    reset_rainbow();
-    select_filter(this);
-    live_rainbow.style.display = "initial";
-    live_rainbow.style.width = "initial";
-    rainbow.checked = true;
-});
-
-function select_filter(filter){
-    reset_moving();
-    reset_filters();
+function select_filter(former_filter, filter) {
+    reset_moving(former_filter, true);
 
     filter.setAttribute('class', 'selected-filter');
 
@@ -130,31 +30,126 @@ function select_filter(filter){
     uploadbutton.style.display = 'block';
 }
 
-function reset_girls() {
-    live_girls.style.left = "0px";
-    live_girls.style.top = "0px";
+function move(direction) {
+    var selected = document.getElementsByClassName('selected-filter')[0];
+    if (!selected)
+        return;
+    var elem = document.getElementById("live-" + selected.id);
+    if (direction == "left") {
+        left_move--;
+        left_input.value = left_move;
+        elem.style.left = (parseInt(window.getComputedStyle(elem).left) - 1 + "px");
+    }
+    if (direction == "up") {
+        top_move--;
+        top_input.value = top_move;
+        elem.style.top= (parseInt(window.getComputedStyle(elem).top) - 1 + "px");
+    }
+    if (direction == "right") {
+        left_move++;
+        left_input.value = left_move;
+        elem.style.left = (parseInt(window.getComputedStyle(elem).left) + 1 + "px");
+    }
+    if (direction == "down") {
+        top_move++;
+        top_input.value = top_move;
+        elem.style.top= (parseInt(window.getComputedStyle(elem).top) + 1 + "px");
+    }
+    if (direction == "wider") {
+        added_width++;
+        width_input.value  = added_width;
+        elem.style.width = (parseInt(window.getComputedStyle(elem).width) + 1 + "px");
+    }
+    if (direction == "tighter") {
+        added_width--;
+        width_input.value  = added_width;
+        elem.style.width = (parseInt(window.getComputedStyle(elem).width) - 1 + "px");
+    }
+}
+
+document.onkeydown = function(e) {
+    if (e.keyCode == 82)
+        reset_moving(document.getElementsByClassName('selected-filter')[0], false);
+    if (e.keyCode == 37) {
+        e.preventDefault();
+        move('left');
+    }
+    if (e.keyCode == 38) {
+        e.preventDefault();
+        move('up');
+    }
+    if (e.keyCode == 39) {
+        e.preventDefault();
+        move('right');
+    }
+    if (e.keyCode == 40) {
+        e.preventDefault();
+        move('down');
+    }
+    if (e.keyCode == 187) {
+        move('wider');
+    }
+    if (e.keyCode == 189) {
+        move('tighter');
+    }
+};
+
+
+document.getElementById('filter-girls').addEventListener('click', function (e) {
+    select_filter(document.getElementsByClassName('selected-filter')[0], this);
+    live_girls.style.display = "initial";
     live_girls.style.width = "initial";
-}
+    girls.checked = true;
+});
 
-function reset_hair() {
-    live_hair.style.left = "100px";
-    live_hair.style.top = "0px";
+document.getElementById('filter-hair').addEventListener('click', function (e) {
+    select_filter(document.getElementsByClassName('selected-filter')[0], this);
+    live_hair.style.display = "initial";
     live_hair.style.width = "initial";
-}
+    hair.checked = true;
+});
 
-function reset_mustache() {
-    live_mustache.style.left = "140px";
-    live_mustache.style.top = "140px";
+document.getElementById('filter-mustache').addEventListener('click', function (e) {
+    select_filter(document.getElementsByClassName('selected-filter')[0], this);
+    live_mustache.style.display = "initial";
     live_mustache.style.width = "initial";
-}
+    mustache.checked = true;
+});
 
-function reset_rainbow() {
-    live_rainbow.style.left = "0px";
-    live_rainbow.style.top = "0px";
+document.getElementById('filter-rainbow').addEventListener('click', function (e) {
+    select_filter(document.getElementsByClassName('selected-filter')[0], this);
+    live_rainbow.style.display = "initial";
     live_rainbow.style.width = "initial";
+    rainbow.checked = true;
+});
+
+function get_initial_position(filter, attribute) {
+    if (filter == "filter-hair")
+        return (attribute == "left") ? "100px" : "0px";
+    else if (filter == "filter-mustache")
+        return "140px";
+    return "0px";
 }
 
-function reset_moving(){
+function reset_moving(filter, reset_button_pressed) {
+    if (!filter)
+        return;
+
+
+    var live_filter = document.getElementById("live-" + filter.id);
+    var initial_top = get_initial_position(filter.id, "top");
+    var initial_left = get_initial_position(filter.id, "left");
+
+    live_filter.style.top = initial_top;
+    live_filter.style.left = initial_left;
+    live_filter.style.width = "initial";
+
+    if (reset_button_pressed) {
+        live_filter.style.display = "none";
+        filter.setAttribute('class', '');
+    }
+
+
     top_move = 0;
     left_move = 0;
     added_width = 0;
@@ -162,16 +157,4 @@ function reset_moving(){
     top_input.value = 0;
     left_input.value = 0;
     width_input.value = 0;
-}
-
-function reset_filters() {
-    document.getElementById('girls-filter').setAttribute('class', '');
-    document.getElementById('hair-filter').setAttribute('class', '');
-    document.getElementById('mustache-filter').setAttribute('class', '');
-    document.getElementById('rainbow-filter').setAttribute('class', '');
-
-    document.getElementById('live-filter-girls').style.display = "none";
-    document.getElementById('live-filter-hair').style.display = "none";
-    document.getElementById('live-filter-mustache').style.display = "none";
-    document.getElementById('live-filter-rainbow').style.display = "none";
 }
