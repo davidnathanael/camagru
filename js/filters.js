@@ -135,7 +135,6 @@ function reset_moving(filter, reset_button_pressed) {
     if (!filter)
         return;
 
-
     var live_filter = document.getElementById("live-" + filter.id);
     var initial_top = get_initial_position(filter.id, "top");
     var initial_left = get_initial_position(filter.id, "left");
@@ -148,7 +147,6 @@ function reset_moving(filter, reset_button_pressed) {
         live_filter.style.display = "none";
         filter.setAttribute('class', '');
     }
-
 
     top_move = 0;
     left_move = 0;
