@@ -1,7 +1,19 @@
 <?php
 session_start();
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
+if (empty($_SESSION['id']))
+{
+    echo json_encode(array('msg' => 'failure', 'error' => 'Not authenticated'));
+    die();
+}
+
+if (empty($_GET['id']))
+{
+    echo json_encode(array('msg' => 'failure', 'error' => 'ID not specified'));
+    die();
+}
 
 try {
     $stmt = $DB->prepare('SELECT * FROM photos WHERE id = :id');
@@ -22,7 +34,9 @@ try {
                 {
                     $DB->query('DELETE FROM likes WHERE photo_id = ' . $pic['id']);
                     $DB->query('DELETE FROM comments WHERE photo_id = ' . $pic['id']);
-                    unlink("../img/photos/" . $pic['img_path']);
+                    $file_path = "../img/photos/" . $pic['img_path'];
+                    if (file_exists($file_path))
+                        unlink($file_path);
                     echo json_encode(array('msg' => 'success'));
                 }
             }
@@ -36,7 +50,7 @@ try {
 
 } catch (Exception $e)
 {
-    print("Error QUERY ! ". $e->getMessage() ."<br />");
+    echo json_encode(array('msg' => 'failure', 'error' => e.getMessage()));
     die();
 }
 

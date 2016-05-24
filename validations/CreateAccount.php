@@ -5,22 +5,22 @@ include $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/validations/Utils.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
-if(!isset( $_POST['username'], $_POST['password'], $_POST['confirm_password'], $_POST['mail'], $_POST['form_token']))
+if($_POST['username'] == "" || $_POST['password'] == "" || $_POST['confirm_password'] == "" || $_POST['mail'] == "")
     header("Location: ../auth.php?action=signup&login=" . $_POST['username'] . "&mail=". $_POST['mail'] ."&msg=" . urlencode('All fields are required'));
-if($_POST['username'] == "" || $_POST['password'] == "" || $_POST['confirm_password'] == "" || $_POST['mail'] == "" || $_POST['form_token'] == "")
-    header("Location: ../auth.php?action=signup&login=" . $_POST['username'] . "&mail=". $_POST['mail'] ."&msg=" . urlencode('All fields are required'));
-elseif( $_POST['form_token'] != $_SESSION['form_token'])
+else if( $_POST['form_token'] != $_SESSION['form_token'])
     header("Location: ../auth.php?action=signup&msg=" . urlencode('Invalid form submission'));
-elseif (strlen( $_POST['username']) > 20 || strlen($_POST['username']) < 4)
-    header("Location: ../auth.php?action=signup&msg=" . urlencode('Incorrect length for username : minimum 4 caracters'));
-elseif (strlen( $_POST['password']) > 20 || strlen($_POST['password']) < 4)
-    header("Location: ../auth.php?action=signup&msg=" . urlencode('Incorrect length for password : minimum 4 caracters'));
-elseif ($_POST['password'] != $_POST['confirm_password'])
+else if (strlen( $_POST['username']) > 20 || strlen($_POST['username']) < 4)
+    header("Location: ../auth.php?action=signup&msg=" . urlencode('Incorrect length for username min : 4 caracters max : 20 caracters'));
+else if (strlen( $_POST['password']) > 20 || strlen($_POST['password']) < 4)
+    header("Location: ../auth.php?action=signup&msg=" . urlencode('Incorrect length for password min : 4 caracters max : 20 caracters'));
+else if ($_POST['password'] != $_POST['confirm_password'])
     header("Location: ../auth.php?action=signup&msg=" . urlencode('Passwords dont match'));
-elseif (ctype_alnum($_POST['username']) != true)
+else if (ctype_alnum($_POST['username']) != true)
     header("Location: ../auth.php?action=signup&msg=" . urlencode('Username must be alpha numeric'));
-elseif (ctype_alnum($_POST['password']) != true)
-    header("Location: ../auth.php?action=signup&msg=" . urlencode('Password must be alpha numeric'));
+else if (!preg_match("(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$)", $_POST['password']))
+    header("Location: ../auth.php?action=signup&msg=" . urlencode('Password must contain at least one lowercase, one uppercase and one number'));
+// else if (ctype_alnum($_POST['password']) != true)
+//     header("Location: ../auth.php?action=signup&msg=" . urlencode('Password must be alpha numeric'));
 else
 {
     $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
@@ -59,7 +59,7 @@ else
             $message = 'Login or email already exists';
         else
             $message = 'We are unable to process your request. Please try again later';
-        header("Location: ../auth.php?action=signup&msg=" . urlencode($message . $e->getMessage()));
+        header("Location: ../auth.php?action=signup&msg=" . urlencode($message));
     }
 }
 ?>

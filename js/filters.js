@@ -35,6 +35,8 @@ function move(direction) {
     if (!selected)
         return;
     var elem = document.getElementById("live-" + selected.id);
+    if (!elem)
+        return;
     if (direction == "left") {
         left_move--;
         left_input.value = left_move;
@@ -86,10 +88,10 @@ document.onkeydown = function(e) {
         e.preventDefault();
         move('down');
     }
-    if (e.keyCode == 187) {
+    if (e.keyCode == 107) {
         move('wider');
     }
-    if (e.keyCode == 189) {
+    if (e.keyCode == 109) {
         move('tighter');
     }
 };
@@ -136,6 +138,9 @@ function reset_moving(filter, reset_button_pressed) {
         return;
 
     var live_filter = document.getElementById("live-" + filter.id);
+    if (!live_filter)
+        return;
+
     var initial_top = get_initial_position(filter.id, "top");
     var initial_left = get_initial_position(filter.id, "left");
 

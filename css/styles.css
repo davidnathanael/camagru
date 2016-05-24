@@ -1,5 +1,6 @@
 body {
     background-color: #FFF;
+    margin: 0 0 150px;
 }
 
 header {
@@ -77,6 +78,9 @@ header .index {
 }
 
 footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
     background-color: #333;
     clear:		both;
     width: 		100%;
@@ -173,6 +177,7 @@ input[type=submit]:hover {
     position: relative;
 	display: block;
 	margin: auto;
+    height: 262px;
 }
 
 #live-filters {

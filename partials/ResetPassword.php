@@ -8,11 +8,11 @@ $_SESSION['form_token'] = $form_token;
 <form action="../validations/ResetPassword.php" method="post">
 		<p>
 			<label for="password">New password</label>
-			<input type="text" id="password" name="password"/>
+			<input type="password" id="password" name="password"/>
 		</p>
 		<p>
 			<label for="confirm_password">Confirm password</label>
-			<input type="text" id="confirm_password" name="confirm_password"/>
+			<input type="password" id="confirm_password" name="confirm_password"/>
 		</p>
 		<p>
 			<input type="hidden" name="form_token" value="<?php echo $form_token; ?>" />

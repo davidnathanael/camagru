@@ -5,14 +5,18 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
-if(( $_POST['password'] == "" || $_POST['confirm_password'] == "" || $_POST['form_token'] == ""))
+if(( $_POST['password'] == "" || $_POST['confirm_password'] == ""))
 	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('All fields are required'));
 else if(( $_POST['hash'] == ""))
 	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('Invalid hash.'));
 elseif( $_POST['password'] != $_POST['confirm_password'])
-	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('Passwords dont match.'));
+	header("Location: ../auth.php?action=reset_password&hash=". $_POST['hash'] ."&msg=" . urlencode('Passwords dont match.'));
 elseif( $_POST['form_token'] != $_SESSION['form_token'])
-	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('Invalid form token'));
+	header("Location: ../auth.php?action=reset_password&hash=". $_POST['hash'] ."&msg=" . urlencode('Invalid form token'));
+else if (strlen( $_POST['password']) > 20 || strlen($_POST['password']) < 4)
+    header("Location: ../auth.php?action=reset_password&hash=". $_POST['hash'] ."&msg=" . urlencode('Incorrect length for password min : 4 caracters max : 20 caracters'));
+else if (!preg_match("(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$)", $_POST['password']))
+    header("Location: ../auth.php?action=reset_password&hash=". $_POST['hash'] ."&msg=" . urlencode('Password must contain at least one lowercase, one uppercase and one number'));
 else
 {
     $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
@@ -35,7 +39,7 @@ else
 		if (!empty($data))
 		{
             $username = $data[0]['login'];
-            $id = $data[0]['login'];
+            $id = $data[0]['id'];
             $email = $data[0]['mail'];
 			if ($data[0]['confirmed'])
 			{
@@ -74,7 +78,7 @@ else
             }
 		}
 		else
-        	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('Invalid hash.'));
+        	header("Location: ../auth.php?action=reset_password&msg=" . urlencode('Invalid hash'));
     }
     catch(Exception $e)
     {

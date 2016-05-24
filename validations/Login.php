@@ -4,9 +4,7 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/config/database.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
-if(!isset( $_POST['username'], $_POST['password'], $_POST['form_token']))
-	header("Location: ../auth.php?action=login&login=". $_POST['username'] ."&msg=" . urlencode('All fields are required'));
-else if(( $_POST['username'] == "" || $_POST['password'] == "" || $_POST['form_token'] == ""))
+if(( $_POST['username'] == "" || $_POST['password'] == ""))
 	header("Location: ../auth.php?action=login&login=". $_POST['username'] ."&msg=" . urlencode('All fields are required'));
 elseif( $_POST['form_token'] != $_SESSION['form_token'])
 	header("Location: ../auth.php?action=login&msg=" . urlencode('Invalid form submission'));
@@ -19,8 +17,6 @@ else
 
     try
     {
-        // $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-
         $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $DB->prepare('SELECT * FROM users WHERE login = :login AND password = :password');

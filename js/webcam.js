@@ -39,7 +39,8 @@
                 }
                 video.play();
             }, function(err) {
-                console.log("An error occured! " + err);
+                startbutton.style.display = "none";
+                // document.getElementById("live-filters").remove();
             });
 
             load_pictures(1);
@@ -73,13 +74,13 @@
                 fd.append("filter", get_filter());
                 fd.append("top", document.getElementById("top-move").value);
                 fd.append("left", document.getElementById("left-move").value);
+                fd.append("width", document.getElementById("added-width").value);
 
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '../validations/UploadPicture.php', true);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         var response = JSON.parse(xhr.response);
-                        console.log(response);
                         if (response.msg == "success") {
                             photo.setAttribute('src', response.data);
                             photo.style.display = "block";
@@ -167,7 +168,6 @@
         }
 
         function load_pictures(page) {
-            console.log(page);
             var node = document.getElementById("gallery");
             while (node.firstChild) {
                 node.removeChild(node.firstChild);
@@ -183,8 +183,6 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.response);
-                    // var response = (xhr.response);
-                    console.log(response);
                     if (response.msg == 'success')
                     {
                         var pictures = response.pictures;
@@ -305,8 +303,6 @@
                             elem.parentNode.remove();
                             load_pictures(page);
                         }
-                        else
-                        console.log(response.error);
                     }
                 };
                 xhr.send();

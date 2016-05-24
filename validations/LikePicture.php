@@ -4,6 +4,18 @@ session_start();
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/validations/DB_Utils.php';
 
+if (empty($_SESSION['id']))
+{
+    echo json_encode(array('msg' => 'failure', 'error' => 'Not authenticated'));
+    die();
+}
+
+if (empty($_GET['id']))
+{
+    echo json_encode(array('msg' => 'failure', 'error' => 'ID not specified'));
+    die();
+}
+
 try {
     $stmt = $DB->prepare('SELECT * FROM likes WHERE user_id = :user_id AND photo_id = :photo_id');
 

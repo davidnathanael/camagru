@@ -25,7 +25,6 @@
         }
 
         function load_pictures(page) {
-            console.log(page);
 
             var node = document.getElementById("gallery");
             while (node.firstChild) {
@@ -42,7 +41,6 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.response);
-                    console.log(response);
                     if (response.msg == 'success')
                     {
                         var pictures = response.pictures;
@@ -158,8 +156,6 @@
                             elem.parentNode.remove();
                             load_pictures(page);
                         }
-                        else
-                            console.log(response.error);
                     }
                 };
                 xhr.send();
